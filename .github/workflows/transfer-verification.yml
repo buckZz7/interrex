@@ -1,0 +1,30 @@
+name: Transfer Verification
+
+# The Article VI §4 autonomy gate: grades the seated senate against the
+# founder's founding rulings. Manually triggered.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Grade the senate against the founder
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m evals.transfer_verification --threshold 0.8 --report transfer-report.md --budget 2.0
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: transfer-report
+          path: transfer-report.md
