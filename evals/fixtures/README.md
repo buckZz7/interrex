@@ -1,0 +1,1 @@
+Founding fixtures go here — generated with the founder during the Interview Protocol (docs/INTERVIEW_PROTOCOL.md). See jurisdiction #1 for examples: https://github.com/buckZz7/agentic-senate/tree/main/evals/fixtures

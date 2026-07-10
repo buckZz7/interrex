@@ -1,0 +1,31 @@
+name: Decision-Quality Benchmark
+
+# Manually triggered exam of the Senate (evals/benchmark.py).
+# Runs the fixture set through the real deliberation engine and uploads
+# the report. Exit code 1 = at least one false approval occurred.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exam:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Examine the Senate
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m evals.benchmark --report benchmark-report.md --budget 2.0
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-report
+          path: benchmark-report.md

@@ -1,0 +1,10 @@
+# CODEOWNERS — protected paths require Custodian review (bootstrap Phase 0).
+# GitHub enforces this when branch protection enables "Require review from
+# Code Owners". See CONSTITUTION.md Articles V & VI.
+
+# The Constitution itself — amendments only via Article V process
+/CONSTITUTION.md    @YOUR_GITHUB_HANDLE
+
+# Senate composition and governance machinery
+/senate/config.yaml @YOUR_GITHUB_HANDLE
+/.github/           @YOUR_GITHUB_HANDLE

@@ -1,0 +1,47 @@
+name: Senate Review
+
+# Phase 0 (bootstrap): the Senate's verdict is ADVISORY — it comments on every
+# PR but the human Custodian merges. See CONSTITUTION.md Article VI.
+#
+# NOTE: uses pull_request_target so the workflow (and secrets) come from the
+# base branch, not the fork. We never check out or execute PR head code —
+# the Senate only reads the diff via the GitHub API.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: senate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  deliberate:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
+    steps:
+      - name: Checkout base branch (never PR head)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Convene the Senate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python -m senate.merge_gate --pr ${{ github.event.pull_request.number }} \
+            || echo "Senate verdict: non-approve (advisory in Phase 0)"

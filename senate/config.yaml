@@ -1,0 +1,49 @@
+# Agentic Senate — composition & policy
+# This file is governed by CONSTITUTION.md. Article III constrains composition:
+# odd number of senators (3–9), no more than ceil(N/3) from one model family.
+
+llm:
+  provider: openrouter            # one gateway, many model families
+  base_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+
+budget:
+  max_usd_per_deliberation: 0.50  # hard stop; Article II §6 (Economy)
+  max_tokens_per_turn: 1200
+  fast_track_model: "google/gemini-2.5-flash-lite"   # triage + fast-track reviews
+
+triage:
+  model: "google/gemini-2.5-flash-lite"
+  # Paths that ALWAYS force full deliberation regardless of triage verdict
+  always_deliberate_paths:
+    - "CONSTITUTION.md"
+    - "senate/config.yaml"
+    - ".github/workflows/*"
+    - "senate/deliberation/*"
+
+senate:
+  quorum: 3
+  senators:
+    - name: "Solon"
+      model: "anthropic/claude-sonnet-4"
+      family: "anthropic"
+      mandate: >
+        Constitutional fidelity. You weigh every change against the letter and
+        spirit of CONSTITUTION.md, especially the priority order of values.
+    - name: "Hypatia"
+      model: "openai/gpt-4.1-mini"
+      family: "openai"
+      mandate: >
+        Engineering quality. You scrutinize correctness, tests, maintainability,
+        and whether the change does what it claims. You distrust untested code.
+    - name: "Cincinnatus"
+      model: "deepseek/deepseek-chat-v3-0324"
+      family: "deepseek"
+      mandate: >
+        Safety and power concentration. You hunt for changes that quietly grant
+        authority, weaken review, exfiltrate secrets, or game incentive systems.
+        You assume every PR author may be adversarial.
+
+amendment:
+  supermajority: 0.6667            # Article V §3
+  custodian_approval_required: true # Article VI — bootstrap phase 0
