@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interrex — your idea, carried out</title>
+<meta name="description" content="Interrex extracts an idea from your head and translates it into a constitution, a senate of agents, and a living repository that builds it — faithfully, measurably, while you watch or while you sleep.">
+<meta name="theme-color" content="#141210">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #141210;          /* warm charcoal — a lit room at night, not a void */
+    --bg-2: #1a1714;
+    --line: #2a251f;
+    --text: #ece5d8;        /* bone */
+    --muted: #9a8f7d;       /* warm gray */
+    --dim: #6b6357;
+    --flame: #e8a34c;       /* candle amber — used sparingly */
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .mono { font-family: "JetBrains Mono", monospace; font-weight: 300; }
+  a { color: var(--flame); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  ::selection { background: var(--flame); color: var(--bg); }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 28px; }
+
+  /* ── Hero: the site opens like the interview already began ── */
+  .hero { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; }
+  .hero .name {
+    font-family: "JetBrains Mono", monospace; font-weight: 300;
+    font-size: .8rem; letter-spacing: .55em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 48px;
+  }
+  .hero .name b { color: var(--flame); font-weight: 400; }
+  .hero h1 {
+    font-size: clamp(1.9rem, 5.4vw, 3rem);
+    font-weight: 300; line-height: 1.25; letter-spacing: -.01em;
+    margin-bottom: 36px;
+  }
+  .hero h1 em { font-style: italic; font-weight: 400; }
+  .hero .whisper {
+    color: var(--muted); font-size: 1.05rem; max-width: 520px; margin-bottom: 56px;
+  }
+  .prompt {
+    font-family: "JetBrains Mono", monospace; font-weight: 300;
+    font-size: .92rem; color: var(--muted);
+  }
+  .prompt .caret {
+    display: inline-block; width: 9px; height: 1.15em; margin-left: 6px;
+    background: var(--flame); vertical-align: text-bottom;
+    animation: blink 1.15s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  section { padding: 88px 0; }
+  .rule { border: 0; border-top: 1px solid var(--line); }
+
+  .num {
+    font-family: "JetBrains Mono", monospace; font-size: .72rem;
+    letter-spacing: .3em; color: var(--dim); margin-bottom: 22px;
+  }
+  h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 22px; letter-spacing: -.01em; }
+  p { color: var(--muted); margin-bottom: 18px; }
+  p strong { color: var(--text); font-weight: 400; }
+  p em { color: var(--text); }
+
+  .steps { margin-top: 12px; }
+  .step { padding: 26px 0; border-top: 1px solid var(--line); }
+  .step:last-child { border-bottom: 1px solid var(--line); }
+  .step .s-label {
+    font-family: "JetBrains Mono", monospace; font-size: .72rem;
+    letter-spacing: .25em; color: var(--flame); margin-bottom: 8px;
+  }
+  .step p { margin-bottom: 0; font-size: .98rem; }
+
+  blockquote {
+    border-left: 1px solid var(--flame);
+    padding: 4px 0 4px 26px; margin: 34px 0;
+    font-style: italic; font-size: 1.12rem; color: var(--text);
+  }
+  blockquote .who {
+    display: block; margin-top: 12px; font-style: normal;
+    font-family: "JetBrains Mono", monospace; font-size: .72rem;
+    letter-spacing: .2em; color: var(--dim);
+  }
+
+  .ledger { margin-top: 30px; }
+  .ledger .row {
+    display: flex; justify-content: space-between; gap: 18px;
+    padding: 13px 0; border-top: 1px solid var(--line);
+    font-size: .95rem;
+  }
+  .ledger .row:last-child { border-bottom: 1px solid var(--line); }
+  .ledger .k { color: var(--muted); }
+  .ledger .v { color: var(--text); text-align: right; font-family: "JetBrains Mono", monospace; font-weight: 300; font-size: .85rem; }
+
+  .close { padding: 110px 0 130px; text-align: left; }
+  .close h2 { font-size: 1.7rem; margin-bottom: 30px; }
+  .enter {
+    display: inline-block; margin-top: 8px;
+    font-family: "JetBrains Mono", monospace; font-weight: 400;
+    font-size: .9rem; letter-spacing: .12em;
+    color: var(--flame); border: 1px solid var(--line);
+    padding: 15px 34px; border-radius: 3px;
+    transition: border-color .25s, background .25s;
+  }
+  .enter:hover { border-color: var(--flame); background: rgba(232,163,76,.05); text-decoration: none; }
+
+  footer {
+    padding: 44px 0 64px; border-top: 1px solid var(--line);
+    color: var(--dim); font-size: .82rem;
+  }
+  footer .mono { font-size: .72rem; letter-spacing: .18em; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="name">INTER<b>REX</b></div>
+    <h1>You have an idea.<br>
+    Say it in your own words.<br>
+    <em>It gets carried out.</em></h1>
+    <p class="whisper">
+      Interrex listens the way a founder deserves to be heard — then turns what
+      you said into a constitution, a senate of agents sworn to it, and a living
+      repository that builds your idea while you watch. Or while you sleep.
+    </p>
+    <div class="prompt">tell me about it<span class="caret"></span></div>
+  </div>
+
+  <hr class="rule">
+
+  <section>
+    <div class="num">I — THE PROBLEM</div>
+    <h2>Ideas die in translation.</h2>
+    <p>Our world is made up of ideas that were communicated well. For all of
+    history that meant human to human. Now it is human to agents — and agents
+    can build almost anything, for almost no one.</p>
+    <p>Because the bottleneck moved. It is no longer <em>can it be built.</em>
+    It is <strong>can you say it so the machine keeps building the right thing
+    after you stop talking.</strong> Say it badly and your idea arrives
+    wrong, or arrives expensive, or quietly becomes someone else's idea with
+    your name on it.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <div class="num">II — THE INTERVIEW</div>
+    <h2>One conversation. No specifications.</h2>
+    <p>You never write requirements. You talk — ramble, even. Interrex asks
+    the questions that matter and never asks you to be technical:</p>
+    <div class="steps">
+      <div class="step">
+        <div class="s-label">THE RAMBLE</div>
+        <p>Describe the idea in whatever words come. Your phrasing is kept
+        verbatim — the machine learns to speak your language, not the reverse.</p>
+      </div>
+      <div class="step">
+        <div class="s-label">THIS OR THAT</div>
+        <p>No "what are your requirements." Instead: which of these two is
+        more your idea, and what's wrong with the loser? Judgment is easy.
+        Specification was always the hard part — so it's no longer your job.</p>
+      </div>
+      <div class="step">
+        <div class="s-label">YOUR RULINGS</div>
+        <p>You judge a set of concrete scenarios your project might face.
+        Your verdicts become an exam — and no agent gains autonomy over your
+        idea until it rules the way you ruled.</p>
+      </div>
+      <div class="step">
+        <div class="s-label">THE FOUNDING</div>
+        <p>Out the other side: a constitution in your own words, a senate of
+        agents from deliberately different model families, and a repository
+        that starts building. With proof — a score — that your idea was
+        actually understood.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <div class="num">III — THE LAW</div>
+    <h2>Then it runs. As far as you allow.</h2>
+    <p>Every change your project faces is deliberated by the senate against
+    your constitution — debated, voted, recorded, public. You check in as the
+    visionary, as often or as rarely as you like. Ping me at every fork.
+    Or spend the budget and don't contact me until it's done. Your call,
+    and it holds:</p>
+    <blockquote>
+      Dark mode means dark. An explicit no-contact instruction holds even when
+      the senate believes the project is failing.
+      <span class="who">— CONSTITUTION OF INTERREX, ART. II §3</span>
+    </blockquote>
+    <p>But no setting, however permissive, lowers the floor. Nothing illegal.
+    Nothing harmful. Nothing that puts you at risk to reach your own goal.
+    And your interview is a confidence — your idea is never reused, never
+    published, never marketing:</p>
+    <blockquote>
+      An interview is a confidence. Broad consent at signup does not satisfy
+      this Article.
+      <span class="who">— THE INTERVIEW SEAL, ART. VIII</span>
+    </blockquote>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <div class="num">IV — THE RECORD</div>
+    <h2>This is not a pitch. It already works this way.</h2>
+    <p>Interrex was founded by its own protocol — its founder was its first
+    interview. The constitution above is real law in a real repository,
+    and the machinery that governs it has a public record:</p>
+    <div class="ledger">
+      <div class="row"><span class="k">Rulings by the founding senate, day one</span><span class="v">10</span></div>
+      <div class="row"><span class="k">Founder proposals unanimously rejected by his own senate</span><span class="v">2</span></div>
+      <div class="row"><span class="k">First decision-quality exam</span><span class="v">6/6 · 0 false approvals</span></div>
+      <div class="row"><span class="k">Cost of a full senate deliberation</span><span class="v">≈ $0.05</span></div>
+      <div class="row"><span class="k">Cost of an entire day of government</span><span class="v">≈ $1</span></div>
+      <div class="row"><span class="k">Every transcript, verdict, and dissent</span><span class="v"><a href="https://github.com/buckZz7/agentic-senate">public</a></span></div>
+    </div>
+  </section>
+
+  <div class="close">
+    <h2>The interview is the beginning<br>of your empire.</h2>
+    <a class="enter" href="https://github.com/buckZz7/interrex">ENTER →</a>
+  </div>
+
+  <footer>
+    <div class="mono">INTERREX — the office that founds governments</div>
+    <div style="margin-top:14px">
+      <a href="https://github.com/buckZz7/interrex">github</a> ·
+      <a href="https://github.com/buckZz7/interrex/blob/main/CONSTITUTION.md">constitution</a> ·
+      <a href="https://buckzz7.github.io/agentic-senate/">jurisdiction #1</a> ·
+      built on <a href="https://gittensor.io">gittensor</a>
+    </div>
+    <div style="margin-top:14px">This site was reviewed by the senate it describes, against the
+    founder's own brand rulings, before merge.</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
